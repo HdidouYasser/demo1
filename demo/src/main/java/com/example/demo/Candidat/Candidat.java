@@ -1,47 +1,45 @@
 package com.example.demo.Candidat;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.demo.auth.AuthUser;
+import java.time.LocalDate;
 
-import java.util.Date;
-
-import org.springframework.stereotype.Service;
-@Service
 @Entity
-@Table(name = "candidats")
+@Table(name = "candidat_candidat")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CandidatModel {
-
+public class Candidat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String cne;
     private String cin;
-    private String nomCandidateAr;
-    private String prenomCandidateAr;
+    private String nomCandidatAr;
+    private String prenomCandidatAr; // fixed typo
+    @Lob
     private String adresse;
+    @Lob
     private String adresseAr;
     private String sexe;
     private String villeDeNaissance;
     private String villeDeNaissanceAr;
     private String ville;
-
-    @Temporal(TemporalType.DATE)
-    private Date dateDeNaissance;
-
+    private LocalDate dateDeNaissance;
     private String typeDeHandiCape;
     private String academie;
-    private String telCandidate;
+    private String telCandidat;
     private String pathCv;
     private String pathPhoto;
     private Integer etatDossier;
     private String situationFamiliale;
-    private Long paysId;
-    private Long userId;
     private Boolean fonctionaire;
+
+    @ManyToOne
+    @JoinColumn(name = "pays_id", nullable = false)
+    private Pays pays;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private AuthUser user;
 }
